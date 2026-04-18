@@ -1,0 +1,368 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{textpos}
+\usepackage{scrhack}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{tasks}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{listing}
+\usepackage{graphicx} 
+\usepackage{geometry}
+\usepackage{amsmath}
+
+\geometry{a4paper, margin=1in}
+\lstset{basicstyle=\ttfamily, breaklines=true, showstringspaces=false, commentstyle=\color{gray}}
+
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\title{Internet of Things}
+\author{%
+Rishabh Tiwari - rishabh.tiwari@mail.polimi.it - 10987397 \and
+Author Two - author.two@mail.polimi.it - 12345678 \and
+Author Three - author.three@mail.polimi.it - 87654321
+}
+\date{February 2024}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AY 2023/2024 \par}
+    \vfill
+    \includegraphics[width=150pt]{Images/PolimiLogo.png}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Internet of Things Challenge - 2\par}
+    \vspace{2cm}
+    {\Large \begin{tabular}{c}
+    Rishabh Tiwari - rishabh.tiwari@mail.polimi.it - 10987397\\
+    Marcos V. Firmino P. - marcosvinicius.firmino@mail.polimi.it
+ - 10914211\\
+    Alexander Stephan - alexander.stephan@mail.polimi.it - 10932707
+    \end{tabular}\par}
+    \vfill
+    {\large Professor\par
+        Redondi Alessandro \textsc{Enrico Cesare}}
+    \vfill
+    {\large \textbf{Version 1.1}\\ \today \par}
+\end{titlepage}
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+\thispagestyle{plain}
+\pagenumbering{gobble}
+\mbox{}
+\pagenumbering{roman}
+\pagenumbering{arabic}
+\section{Introduction}
+
+In our project for IoT Challenge 2, we dove into a dataset full of network conversations to uncover how devices are chatting using CoAP and MQTT—two languages of the Internet of Things. Armed with tools like Wireshark and some coding magic, we shifted through the digital back-and-forth to answer a set of questions about these conversations. We looked for patterns, like how often devices ask for updates or if any messages got lost along the way. All the technical jargon aside, our goal was to get the gist of how these IoT devices talk to each other and keep their connections smooth and snappy.
+
+\section{Traffic Analysis Exercise}
+Disclaimer: we also provide Python scripts for most exercises on Webeep.
+\begin{enumerate}
+    % Exercise 1
+    \item \textbf{Analysis of CoAP Clients and GET Requests}
+    \begin{enumerate}
+        \item \textit{How many different CoAP clients sent a GET request to a
+temperature resource (.../temperature)?} 
+        
+        Identification of CoAP GET Requests:
+        \begin{lstlisting}[language=bash]
+coap.code == 1 && coap.opt.uri_path contains "temperature"
+        \end{lstlisting}
+        This filter is used to search for GET requests to resources containing "temperature". In fact, they all match \verb|.../temperature|, as requested. Clients are identified by source port, and only one duplicate port (48049) was observed. Thus, we count \textbf{8} unique clients that sent a total of 9 requests.
+
+        \item 
+        \textit{For each of the clients found in 1a), write the MID of the longest
+CoAP response (any response) received by the client}
+
+        \begin{lstlisting}[language=bash]
+coap && coap.code >= 65 && coap.code <= 165 &&
+(udp.dstport == 55898 || udp.dstport == 33677 || udp.dstport == 51812 || 
+ udp.dstport == 48049 || udp.dstport == 52276 || udp.dstport == 48645 || 
+ udp.dstport == 52247 || udp.dstport == 41264)
+        \end{lstlisting}
+        We filter by valid response codes and the ports previously observed in 1a).
+        After filtering and sorting by length, the message ID \textbf{10589} was found to be the longest CoAP response.
+    \end{enumerate}
+    % Exercise 2
+    \item \textbf{CoAP POST Requests to \texttt{coap.me} Server}
+    \begin{enumerate}
+        \item 
+        \textit{How many CoAP POST requests directed to the "coap.me" server
+did NOT produce a successful result?}
+        \begin{lstlisting}[language=bash]
+coap && ip.dst == 134.102.218.18 && coap.code == 2
+        \end{lstlisting}
+        The IP address 134.102.218.18 was obtained inspecting the respective DNS reply in the traffic dump.
+        We can't use utilities like \texttt{dig}, as the server IP might has changed in the meantime.
+        Finally, tokens of POST requests to this IP were retrieved via Pyshark.
+        
+        In a second step, we go through the responses and register all valid responses with a matching token. (We assume that result means response here. We also assume that a NON request trivially matches this criteria, as there should be no response at all, we do not exclude them.) We subtract the no. of valid responses from the number of total requests.
+        The number of POST requests without successful results was \textbf{17}, identified by filtering response codes in the range from 65 to 69 (see slides in Lab 3).
+        \item 
+        \textit{How many requests from 2a) are directed to a "weird"
+resource? (resources like /weirdXX)?}
+
+        We originally assumed that "weirdXX" means that there have to exactly two characters after the word "weird". However, this does not seem to the case according to Webeep. Therefore, we look for any resource containing "weird". We wrote a Python script that loops over the the packets with the following filter and checks whether they match the tokens from 2a).
+        \begin{lstlisting}[language=bash]
+coap && ip.dst == 134.102.218.18 && coap.code == 2
+        \end{lstlisting}
+        Then, we check whether the last segment in the URL starts with "weird". We find \textbf{7} requests that match the criteria.
+    \end{enumerate}
+
+    \item \textbf{MQTT Publish Messages with QoS=2}
+    \begin{enumerate}
+        \item \textit{How many MQTT Publish messages with qos=2 are RECEIVED by
+the clients running in the machine capturing the traffic?}
+        As per common convention, we assume that the IP of the current machine is \texttt{127.0.0.1}.
+        \begin{lstlisting}[language=bash]
+mqtt.msgtype == 3 && mqtt.qos == 2 && ip.dst == 127.0.0.1
+        \end{lstlisting}
+        The query resulted in \textbf{30} publish messages received by the clients running on the local machine.
+        \item 
+        \textit{How many clients are involved in the messages found in 3a)?}
+        Again, we inspect the source ports. We observe 3 different source ports, consequently there are \textbf{3} clients.
+        \item Message IDs of Subscribe Requests:
+        The MQTT Message IDs that enabled clients to receive these messages were \textbf{51523}, \textbf{44887}, \textbf{32965}, \textbf{51524}, and \textbf{51525}.
+    \end{enumerate}
+
+    \item \textbf{MQTT Subscriptions with Wildcards}
+    \begin{enumerate}
+        \item \textit{How many MQTT clients sent a subscribe message to a public broker
+using at least one wildcard?}
+        
+        Number of clients using wildcards in subscribe messages:
+        \begin{lstlisting}[language=bash]
+mqtt.msgtype == 8 && (mqtt.topic contains "+" || mqtt.topic contains "#") && ip.src != 127.0.0.1
+        \end{lstlisting}
+        By inspecting the source ports, we deduced: there were \textbf{4} clients sending subscribe messages with at least one wildcard.
+
+        \item 
+        \textit{Considering clients found in 4a), how many of them WOULD receive
+a publish message directed to the topic "metaverse/facility4/area0/light“}
+
+        Out of the clients using wildcards, \textbf{2} would receive a publish message  directed to the topic \texttt{metaverse/facility4/area0/light}, because they subscribed to \verb|metaverse/+/area0/light| and \verb|metaverse/facility4/+/light|.
+    \end{enumerate}
+
+    \item \textit{How many MQTT ACK messages in total are received by clients
+who connected to brokers specifying a client identifier shorter than
+15 bytes and using MQTT version 3.1.1?}
+
+    The task involved extracting a CSV of messages with an MQTT client identifier length less than 15 and using MQTT version 3.1.1 (\texttt{mqtt.ver == 4}).
+    \begin{lstlisting}[language=bash]
+mqtt.clientid_len < 15 && mqtt.ver == 4
+    \end{lstlisting}
+    We only see two connect commands from two different clients. Next, we scan for all types of ACK messages using the observed clients as destination IPs and ports. (We also observe the correct source 91.121.93.94.)
+    \begin{lstlisting}
+((ip.dst == 10.0.2.15  && tcp.dstport == 43949) || (ip.dst == 127.0.0.1 && tcp.dstport == 4887 )) 
+&& (mqtt.msgtype == 4 || mqtt.msgtype == 5 || mqtt.msgtype == 6 || mqtt.msgtype == 7 || mqtt.msgtype == 9)
+    \end{lstlisting}
+    Overall, we observe \textbf{18} such requests.
+    \item \textbf{Analysis of MQTT Subscribe Requests}
+    \begin{enumerate}
+        \item \textit{How many MQTT subscribe requests with message ID=1 are directed
+to the HiveMQ broker?}
+
+        Firstly, we discovered the HiveMQ IP by analyzing the DNS response for "broker.hivemq.com.". The HiveMQ IPs are the following:
+        \begin{itemize}
+            \item 3.65.168.153
+            \item 3.66.35.116
+        \end{itemize}
+        \newpage
+        With that information, we wrote the following command:
+        \begin{lstlisting}[language=bash]
+mqtt.msgtype == 8 && mqtt.msgid == 1 && (ip.dst == 3.65.168.153 || ip.dst == 3.66.35.116)
+        \end{lstlisting}
+
+        The first part takes subscribe messages (type equals to 8); the second part looks for the correct message ID; the third filters for the correct destination IP.
+
+        The total number of subscribe messages sent were \textbf{3}, from different clients.
+
+        \item \textit{How many publish messages are received by the clients thanks to the
+subscribe requests found in 6a)}
+        First we collect the corresponding IP, the specific port and topic of subscription of the 3 clients.
+
+        Let's enumerate them:
+        \begin{itemize}
+            \item Client 1: 
+            \begin{itemize}
+                \item IP: 10.0.2.15
+                \item Port: 38887
+                \item Topic: university/department2/floor5
+            \end{itemize}
+            \item Client 2:
+            \begin{itemize}
+                \item IP: 10.0.2.15
+                \item Port: 36707
+                \item Topic: house/kcbplh/section2
+            \end{itemize}
+             \item Client 3:
+            \begin{itemize}
+                \item IP: 10.0.2.15
+                \item Port: 59385
+                \item Topic: hospital/kcbplh/\#
+            \end{itemize}
+        \end{itemize}
+
+        Now, we can filter for incoming messages from the HiveMQ directed to each specific client regarding this specific topic:
+        
+        \begin{lstlisting}[language=bash]
+mqtt.msgtype == 3 && (ip.src == 3.65.168.153 || ip.src ==  3.66.35.116 ) && (ip.dst == 10.0.2.15  && tcp.port == CLIENT_PORT) && (mqtt.topic == SUBCRIPTION_TOPIC) \end{lstlisting}
+
+        The first part filters for publish messages (type 3); the second part filters for the specific source IP (HiveMQ); The third part specifies the client (IP and Port combination); The fourth and final part filters for the specific topic of subscription.
+
+        Doing so for each client:
+        \begin{itemize}
+        
+            \item Client 1
+            \begin{itemize}
+                \item Code:
+                \begin{lstlisting}[language=bash]
+mqtt.msgtype == 3 && (ip.src == 3.65.168.153 || ip.src ==  3.66.35.116 ) && (ip.dst == 10.0.2.15  && tcp.port == 38887) && (mqtt.topic == "university/department2/floor5")
+                \end{lstlisting}
+                
+                \item Result: 0 tuples
+            \end{itemize}
+            
+            \item Client 2
+            \begin{itemize}
+                \item Code: \begin{lstlisting}[language=bash]
+mqtt.msgtype == 3 && (ip.src == 3.65.168.153 || ip.src ==  3.66.35.116 ) && (ip.dst == 10.0.2.15 && tcp.port == 36707) && (mqtt.topic == " house/kcbplh/section2")
+                \end{lstlisting}
+                
+                \item Result: 0 tuples
+            \end{itemize}
+            
+            \item Client 3
+            \begin{itemize}
+                \item Code: \begin{lstlisting}[language=bash]
+mqtt.msgtype == 3 && (ip.src == 3.65.168.153 || ip.src ==  3.66.35.116 ) && (ip.dst == 10.0.2.15 && tcp.port == 59385) && (mqtt.topic contains "hospital/kcbplh") \end{lstlisting}
+                \item Result: 0 tuples
+            \end{itemize}
+        \end{itemize}
+
+        With the results achieved, there were \textbf{0} publish messages received due to the subscription.
+    \end{enumerate}
+    \newpage
+    \item \textbf{MQTT-SN Publish Messages Analysis}
+    \begin{enumerate}
+        \item \textit{How many MQTT-SN (on port 1885) publish messages sent after the
+hour 3.59PM (Milan Time) are directed to topic 6?}
+        \begin{lstlisting}[language=bash]
+udp.dstport==1885 && mqttsn.topic.id == 6 && mqttsn.msg.type == 0x0c && mqttsn && !icmp
+        \end{lstlisting}
+        The number of MQTT-SN publish messages sent after 3.59 PM (Milan Time) to topic 6 was \textbf{3}. We sorted by the UTC time and added +1.
+        \item \textit{Explain possible reasons why messages in 7a) are not handled by the
+server}
+
+        These messages were not handled by the server, possibly due to all publish messages being accompanied by an "ICMP 82 destination unreachable (port unreachable)" packet. This could indicate that the server is not listening on that port or has not even been started. Alternatively, there could be an issue with the network, so requests do not reach the targeted server.
+    \end{enumerate}
+\end{enumerate}
+
+\section{Conclusion}
+After looking closely at how IoT devices talk to each other, we’ve learned a lot about their conversations. It turns out these devices are pretty chatty—they’re always asking each other for updates. But like any chat, sometimes things don’t go smoothly, and messages get lost or blocked. By figuring out the answers to our questions, we’ve also learned that even though these device networks are strong, they need careful watching and smart management. That way, we can keep the lines of communication open and make sure our devices can talk to each other without any hiccups.
+
+\end{document}
+
+
+% 1 a) coap.code == 1 && coap.opt.uri_path contains "temperature" -> 8 (1 duplicate source port)
+% 1 b) 
+% coap.me.		300	IN	A	134.102.218.18
+% coap.code != 2 && ip.dst == 134.102.218.18 124?
+% coap && ip.dst == 134.102.218.18 && coap.opt.uri_path contains "weird" 34
+% mqtt.msgtype == 3 && mqtt.qos == 2 81
+% 3 clients?
+% mqtt.msgtype == 8 && mqtt.msgid == 1
+% broker.hivemq.com
+% broker.hivemq.com.	60	IN	A	52.58.181.123
+% broker.hivemq.com.	60	IN	A	18.196.194.55
+% mqtt-sn && mqtt-sn.msgtype == 3 && mqtt-sn.topic == "topic6" && mqtt-sn.msgtime > "2024-03-23 13:59:00" && tcp.dstport == 1885
+% 4a) mqtt.msgtype == 8 && mqtt.topic matches "[+#]"
+% 
+
+\section{Introduction}
+
+% 1 a) coap.code == 1 && coap.opt.uri_path contains "temperature" -> 8 (1 duplicate source port)
+% 1 b) 
+% coap.me.		300	IN	A	134.102.218.18
+% coap.code != 2 && ip.dst == 134.102.218.18 124?
+% coap && ip.dst == 134.102.218.18 && coap.opt.uri_path contains "weird" 34
+% mqtt.msgtype == 3 && mqtt.qos == 2 81
+% 3 clients?
+% mqtt.msgtype == 8 && mqtt.msgid == 1
+% broker.hivemq.com
+% broker.hivemq.com.	60	IN	A	52.58.181.123
+% broker.hivemq.com.	60	IN	A	18.196.194.55
+% mqtt-sn && mqtt-sn.msgtype == 3 && mqtt-sn.topic == "topic6" && mqtt-sn.msgtime > "2024-03-23 13:59:00" && tcp.dstport == 1885
+% 4a) mqtt.msgtype == 8 && mqtt.topic matches "[+#]"
+% 
+
+\section{Traffic Analysis Exercise}
+\begin{enumerate}
+    \item
+    \begin{enumerate}
+        \item \verb|coap.code == 1 && coap.opt.uri_path contains "temperature"|
+        We search for GET requests with \verb|coap.code == 1|. Then, we check whether the URI path contains the string "temperature". As specified via Webeep, clients are specified by their source port. We only observe one duplicate port, namely, 48049, therefore we count 8 clients, which made 9 requests in total.
+        \item We filter for CoAP responses with the following destination ports: 
+        \texttt{coap \&\& coap.code >= 65 \&\& coap.code <= 165 \&\& (udp.dstport == 55898 || udp.dstport == 33677 || udp.dstport == 51812 || udp.dstport == 48049 || udp.dstport == 52276 || udp.dstport == 48645 || udp.dstport == 52247 || udp.dstport == 41264)}. Then, we sort by length. We find the following, the message ID: 10589
+    \end{enumerate}
+     \item
+    \begin{enumerate}
+        \item First, we determine the IP of the website. This can be easily done using the \texttt{dig} utility on Linux. We get the IP 134.102.218.18.
+        Then, we scan for the tokens of POST requests to this IP. We retrieve them from an exported CSV.
+        Then, we can filter for response codes in the range from 100 to 200 for these tokens.
+        \item 4
+        % coap.code == 2 && ip.dst == 134.102.218.18 && coap.opt.uri_path contains "weird"
+    \end{enumerate}
+         \item
+    \begin{enumerate}
+        \item 30 Query = \verb|mqtt.msgtype == 3 && mqtt.qos == 2 && ip.dst == 127.0.0.1|
+        \item \begin{enumerate} %Using the same string as above and filtering manually
+            \item 51523
+            \item 44887
+            \item 32965
+            \item 51524
+            \item 51525
+        \end{enumerate}
+        \item Query = \verb|mqtt.msgtype == 8 \&\& ip.dst == 127.0.0.1|
+        a
+    \end{enumerate}
+    \item 
+       \begin{enumerate}
+            \item \verb|mqtt.msgtype == 8 && (mqtt.topic contains "+" or mqtt.topic contains "#") && ip.src != 127.0.0.1| $\Rightarrow$ 4
+            \item 2
+            %296	60.690118129	10.0.2.15	91.121.93.94	MQTT	87	Subscribe Request (id=6) [metaverse/+/area0/light]	37419	1883
+            % 551	69.497641433	10.0.2.15	3.65.168.153	MQTT	90	Subscribe Request (id=5) [metaverse/facility4/+/light]	59385	1883
+    \end{enumerate}
+    \item Extract a CSV of messages with length < 15 and specific mqtt version
+        % mqtt.clientid_len < 15 - only connect messages
+        %mqtt.msgtype == 2 && (ip.src == 127.0.0.1 || ip.src == 10.0.2.15) 
+        % (ip.dst == 10.0.2.15 || ip.dst == 127.0.0.1 )&& (mqtt.msgtype == 4 || mqtt.msgtype == 5 || mqtt.msgtype == 6 || mqtt.msgtype == 7 || mqtt.msgtype == 9)
+        % mqtt.clientid_len <= 15 && mqtt.ver == 4
+        % => 231
+    \item % mqtt.msgtype == 8 && mqtt.msgid == 1
+    \item % udp.dstport==1885 && mqttsn.topic.id == 6 && mqttsn.msg.type == 0x0c && mqttsn && !icmp
+
+    7a - 3
+    
+    Reason - And the second part is no because we can see that all the publish messages are accompanied by a "ICMP 82 Destination unreachable (Port unreachable)" packet.
+\end{enumerate}
+
+\end{document}

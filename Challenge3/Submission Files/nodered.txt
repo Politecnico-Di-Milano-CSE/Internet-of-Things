@@ -1,0 +1,1000 @@
+[
+    {
+        "id": "c456d2d5785f34db",
+        "type": "tab",
+        "label": "Challenge 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b7410e021bb6bd4f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1884",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "59205b4f6ef09fdf",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1884",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e349f018f058e972",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "9e3e52cda57c4c42",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9e3e52cda57c4c42",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c58e1b88238f616a",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "c7851c11c7d74fba",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "b3534fd6c5bdfae7",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b3534fd6c5bdfae7",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5a761a8958dd22ac",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "4deb0e9db8e1bc40",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4deb0e9db8e1bc40",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "06ca4796b8977c3e",
+        "type": "mqtt in",
+        "z": "c456d2d5785f34db",
+        "name": "id_generator subscribe",
+        "topic": "challenge3/id_generator",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "59205b4f6ef09fdf",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "a5b36ec553044401"
+            ]
+        ]
+    },
+    {
+        "id": "905ae5213984d0e1",
+        "type": "inject",
+        "z": "c456d2d5785f34db",
+        "name": "5 Seconds Interval",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "e678971c5e5611f2"
+            ]
+        ]
+    },
+    {
+        "id": "073c487c8f94eaf9",
+        "type": "mqtt out",
+        "z": "c456d2d5785f34db",
+        "name": "id_generator publish",
+        "topic": "challenge3/id_generator",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "59205b4f6ef09fdf",
+        "x": 1000,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a5b36ec553044401",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Calculate N",
+        "func": "// msg.payload is the object containing the id and timestamp\nvar id = msg.payload.id;\nvar N = id % 7711;\n\n// Set the result in a new property of the message payload\nmsg.payload.N = N;\nflow.set(\"N_value\", N);\n\n// Return the message to the next node in the flow\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 320,
+        "wires": [
+            [
+                "0415efaba680c95d"
+            ]
+        ]
+    },
+    {
+        "id": "0415efaba680c95d",
+        "type": "file in",
+        "z": "c456d2d5785f34db",
+        "name": "challenge3.csv reader",
+        "filename": "/home/marcos/Downloads/IoT challenge 3/Challenge3.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "10b1a3d9c71d6029"
+            ]
+        ]
+    },
+    {
+        "id": "3746c5e591624f9c",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Get the Nth object",
+        "func": "// Get the N value out of the flow context.\nlet N_value = flow.get(\"N_value\")\n\n// Our payload is an array of JSONs, we have to inspect each one.\n\n// The array indexing starts with 1, therefore we subtract 1.\nlet nth_object = msg.payload[N_value - 1];\nif (nth_object.Payload) {\n    nth_object.Payload = JSON.parse(\"[\" + nth_object.Payload + \"]\");\n}\n\n// We save the object in this JSON format for later.\nflow.set(\"Nth_object\", nth_object);\n// I haven't find a manner to send it via the normal flow... since we use the switch next\n    \nreturn { payload: nth_object};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "0d83fe4fcc84d007"
+            ]
+        ]
+    },
+    {
+        "id": "10b1a3d9c71d6029",
+        "type": "csv",
+        "z": "c456d2d5785f34db",
+        "name": "challenge3 CSV",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 120,
+        "y": 400,
+        "wires": [
+            [
+                "3746c5e591624f9c"
+            ]
+        ]
+    },
+    {
+        "id": "f2315e06e2046c08",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Part 2",
+        "info": "This is the second flow responsible for:\n\n- Receiving message from mosquitto\n- Computing the correct N given the timestamp\n- Get the correct message out of the CSV",
+        "x": 90,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "2224816f6296572d",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Part 1",
+        "info": "This is the first flow, responsible for:\n\n- Generating the random payload every 5 seconds\n- Sending it to the correct Mqtt topic\n- Saving it in log file",
+        "x": 90,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "57b779c773779022",
+        "type": "link in",
+        "z": "c456d2d5785f34db",
+        "name": "Link part processing",
+        "links": [
+            "0d83fe4fcc84d007"
+        ],
+        "x": 35,
+        "y": 560,
+        "wires": [
+            [
+                "a67145c7fcfa9543"
+            ]
+        ]
+    },
+    {
+        "id": "0d83fe4fcc84d007",
+        "type": "link out",
+        "z": "c456d2d5785f34db",
+        "name": "Link",
+        "mode": "link",
+        "links": [
+            "57b779c773779022"
+        ],
+        "x": 525,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a67145c7fcfa9543",
+        "type": "switch",
+        "z": "c456d2d5785f34db",
+        "name": "Switch",
+        "property": "payload.Info",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "Publish Message",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "Ack",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "6680a8d58dbfb838"
+            ],
+            [
+                "1bcc2219ce3c103b"
+            ]
+        ]
+    },
+    {
+        "id": "1bcc2219ce3c103b",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "ACK processing",
+        "func": "// Get the random payload\nlet ack_values = flow.get(\"random_values\");\n\n// Create an object to be written\nlet ack_msg = { TIMESTAMP: ack_values.timestamp, SUB_ID: ack_values.id, MSG_TYPE: \"nothing\"}\n\n// Compute now the ack type\nlet nth_value = flow.get(\"Nth_object\");\nnth_value = JSON.stringify(nth_value);\n\nif (nth_value.includes(\"Connect\")) {\n    ack_msg.MSG_TYPE = \"Connect\";\n} else if (nth_value.includes(\"Publish\")) {\n    ack_msg.MSG_TYPE = \"Publish\";\n} else if (nth_value.includes(\"Subscribe\")) {\n    ack_msg.MSG_TYPE = \"Subscribe\";\n} else if (nth_value.includes(\"Unsubscribe\")) {\n    ack_msg.MSG_TYPE = \"Unsubscribe\";\n}\n\nmsg.payload = ack_msg;\n\n// Defining the columns\nmsg.collumns = [\"TIMESTAMP\", \"SUB_ID\", \"MSG_TYPE\"];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 820,
+        "wires": [
+            [
+                "a2072ed8a46ace74",
+                "fce162ec08656a14"
+            ]
+        ]
+    },
+    {
+        "id": "80965d1432f5aaec",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Part 3: Publish",
+        "info": "The selected message is a publish type so we need to:\n\n- Filter the publish topic\n- Structure the message\n- Send it",
+        "x": 400,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "3ab1812bb93948da",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Part 5: ACK",
+        "info": "",
+        "x": 410,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "a2072ed8a46ace74",
+        "type": "csv",
+        "z": "c456d2d5785f34db",
+        "name": "ACK log csv",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "TIMESTAMP, SUB_ID, MSG_TYPE",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 630,
+        "y": 880,
+        "wires": [
+            [
+                "6fde8d126f57d98b"
+            ]
+        ]
+    },
+    {
+        "id": "029cf1f594822da4",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Prepare for CSV",
+        "func": "// Preparing the payload to save as requested\n// Get the global counter and increment it\nlet counter = flow.get(\"global_No_counter\");\n\nif(counter == undefined) \n{ //first time executing\n    counter = -1;\n}\n\ncounter++; //Increment it\nflow.set(\"global_No_counter\", counter); //Save it\n\n// Define the actual content that will be saved in CSV\nmsg.payload = {\"No.\": counter, \"ID\": msg.payload.id, \"TIMESTAMP\": msg.payload.timestamp}\n\n// Define the columns names to be written\nmsg.collumns = [\"No.\", \"ID\", \"TIMESTAMP\"];\n\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 200,
+        "wires": [
+            [
+                "e91763ac31793be0"
+            ]
+        ]
+    },
+    {
+        "id": "e91763ac31793be0",
+        "type": "csv",
+        "z": "c456d2d5785f34db",
+        "name": "id_log csv",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "No.,ID,TIMESTAMP",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 320,
+        "y": 200,
+        "wires": [
+            [
+                "9a535cf8a6d69568"
+            ]
+        ]
+    },
+    {
+        "id": "9a535cf8a6d69568",
+        "type": "file",
+        "z": "c456d2d5785f34db",
+        "name": "log_id saver",
+        "filename": "/home/marcos/Downloads/IoT challenge 3/log_id.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 520,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1563a4e9532dd120",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "CSV constructor",
+        "info": "Previously it was NOT a CSV, it was just a file with JSONs written\n\nWe need to format the file in a CSV format, separated by commas (just like the Challenge3.csv)\n\nFor this, it is needed aditional formatting, such as adding columns names and adding the global counter requested\n",
+        "x": 320,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "74f37354a1bb2112",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Writing",
+        "info": "The previous node just formats the output in the CSV formats.\nWe need this writing block to make the trick.",
+        "x": 690,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a6bf04ebec1a32eb",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Saving the ack log",
+        "info": "",
+        "x": 630,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "6fde8d126f57d98b",
+        "type": "file",
+        "z": "c456d2d5785f34db",
+        "name": "Ack log saver",
+        "filename": "/home/marcos/Downloads/IoT challenge 3/ack_log.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 810,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1a182f0b6f1d378a",
+        "type": "http request",
+        "z": "c456d2d5785f34db",
+        "name": "ThingSpeak POST",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 850,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fce162ec08656a14",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Setting request",
+        "func": "// Define API key\nlet key = \"Y8C0CCJUQ1USC6T0\";\n\n// Get the global counter and increment it\nlet counter = flow.get(\"global_ACK_counter\");\n\nif (counter == undefined) \n{ // first time executing\n    counter = 0;\n}\n\ncounter++; // Increment it\nflow.set(\"global_ACK_counter\", counter); // Save it\n\nmsg.url = \"https://api.thingspeak.com/update?api_key=\"+key+\"&field1=\"+counter;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 760,
+        "wires": [
+            [
+                "1a182f0b6f1d378a"
+            ]
+        ]
+    },
+    {
+        "id": "f5d4f075f443046d",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Thingspeak",
+        "info": "",
+        "x": 650,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "4cbb932b62c1c450",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Switch",
+        "info": "This switch automatically searches in the content of the stringfied message\n\nIt searches for the keywords, such as ACK or Publish message\n\nIt redirects the flow accordingly\n\nNon-ack and non-publish messages are automatically ignored!!\n",
+        "x": 210,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "4299b20fcdfd0418",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Basically a portal for readability",
+        "info": "",
+        "x": 710,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "e678971c5e5611f2",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Global counter",
+        "func": "//This node counts the ammount of ids sent\n\nlet counter = flow.get(\"global_id_counter\");\n\nif(counter == undefined)\n{//first time\n    counter = 0;\n}\nelse if(counter < 80)\n    counter++;\n\n//sends the counter to the filter\nmsg.flag = counter\n//If the content of flag changes, the filter will allow it ot passs\n//If the content of flag does not changes, the filter will block it\n// Thus we achieve our objective: blocking after the first 80 messages\n\nflow.set(\"global_id_counter\", counter);\n\n//the content of payload is unchanged\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "0529b098d0e965c7"
+            ]
+        ]
+    },
+    {
+        "id": "e2a2aca4340c1f64",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Global counter",
+        "info": "It was specified a maximum of 80 messages generated",
+        "x": 400,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0529b098d0e965c7",
+        "type": "rbe",
+        "z": "c456d2d5785f34db",
+        "name": "Filter",
+        "func": "rbe",
+        "gap": "0",
+        "start": "0",
+        "inout": "in",
+        "septopics": false,
+        "property": "flag",
+        "topi": "topic",
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "9fe0848423195d4e"
+            ]
+        ]
+    },
+    {
+        "id": "2ef8827cdb1415b5",
+        "type": "comment",
+        "z": "c456d2d5785f34db",
+        "name": "Filter",
+        "info": "I set the filter so the program stop running AND it is not in an infinite loop\n\nMy PC crashes if NodeRed is in an infinite loop\n\nFunctionality:\n- It checks the value of msg.flag\n- msg.flag is setup by the previous NodeRe\n- if 80 messages were not send yet, the value received is 0 (always)\n- if the 80 messages are reached, it receives a 100, triggering the filtering and stopping",
+        "x": 570,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6680a8d58dbfb838",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Create MQTT message",
+        "func": "// Get the information out of the message\nlet current_obj = flow.get(\"Nth_object\");\n// Gets the ID and the timestamp\nlet current_random_info = flow.get(\"random_values\");\n\n// Regular expression pattern to match text within brackets\nvar regex = /\\[(.*?)\\]/g;\n\n// Array to store extracted strings\nvar extractedStrings = [];\n\n// Match all occurrences of text within brackets\nvar match;\nwhile ((match = regex.exec(current_obj.Info)) !== null) {\n    // Extract the text within brackets and add it to the array\n    var extractedString = match[1]; // Captured group excluding the brackets\n    extractedStrings.push(extractedString);\n}\n\nmsg = {\n    payload: {\n        id: current_random_info.id,\n        timestamp: current_random_info.timestamp,\n    },\n    topic: extractedString[0]\n};\n\n// Iterate over the array of objects\nfor (var i = 0; i < current_obj.Payload.length; i++) {\n    // Access each object in the array\n    msg.payload.payload = current_obj.Payload[i];\n    node.send(msg);\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 520,
+        "wires": [
+            [
+                "15c0b6e4569d6eb9"
+            ]
+        ]
+    },
+    {
+        "id": "94b4a237d390f34d",
+        "type": "mqtt out",
+        "z": "c456d2d5785f34db",
+        "name": "MQTT publish of Nth message",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "59205b4f6ef09fdf",
+        "x": 930,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "93cd4ed6c8f747ca",
+        "type": "ui_chart",
+        "z": "c456d2d5785f34db",
+        "name": "Fahrenheit Dashboard",
+        "group": "5a761a8958dd22ac",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Fahrenheit",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "20",
+        "ymax": "120",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1360,
+        "y": 580,
+        "wires": [
+            [
+                "bf98d14c0b4d83b1"
+            ]
+        ]
+    },
+    {
+        "id": "39edfb8526db764d",
+        "type": "switch",
+        "z": "c456d2d5785f34db",
+        "name": "",
+        "property": "type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "temperature",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1030,
+        "y": 580,
+        "wires": [
+            [
+                "b9367d2c271a43cd"
+            ]
+        ]
+    },
+    {
+        "id": "bf98d14c0b4d83b1",
+        "type": "csv",
+        "z": "c456d2d5785f34db",
+        "name": "Filtered Pubs",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "No.,LONG,RANGE,LAT,TYPE,UNIT,DESCRIPTION",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 850,
+        "y": 660,
+        "wires": [
+            [
+                "204b2603c61940fe"
+            ]
+        ]
+    },
+    {
+        "id": "204b2603c61940fe",
+        "type": "file",
+        "z": "c456d2d5785f34db",
+        "name": "Filtered Publish saver",
+        "filename": "/home/marcos/Downloads/IoT challenge 3/filtered_publish.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1060,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b9367d2c271a43cd",
+        "type": "switch",
+        "z": "c456d2d5785f34db",
+        "name": "",
+        "property": "unit",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "F",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1170,
+        "y": 580,
+        "wires": [
+            [
+                "93cd4ed6c8f747ca"
+            ]
+        ]
+    },
+    {
+        "id": "938ae3326ac210ba",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Prepare Fahrenheit",
+        "func": "// Parse the JSON string from msg.payload\ntry {\n    var data = msg.payload.payload; // Assuming the payload contains a stringified JSON object\n    // Extract the range from the parsed JSON\n    var rangeArray = data.range;\n    \n    // Calculate the average of the range\n    var average = (rangeArray[0] + rangeArray[1]) / 2;\n\n    // Create a new message object with the calculated average\n    var newMsg = {\n        payload: average,\n        type: data.type,\n        unit: data.unit\n    };\n\n    // Return the new message object\n    return newMsg;\n} catch (error) {\n    // If there's an error parsing the JSON, log the error and return null\n    node.error(\"Error parsing JSON: \" + error.message, data);\n    return null;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 580,
+        "wires": [
+            [
+                "39edfb8526db764d"
+            ]
+        ]
+    },
+    {
+        "id": "15c0b6e4569d6eb9",
+        "type": "delay",
+        "z": "c456d2d5785f34db",
+        "name": "Rate limiter",
+        "pauseType": "rate",
+        "timeout": "4",
+        "timeoutUnits": "minutes",
+        "rate": "4",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 650,
+        "y": 520,
+        "wires": [
+            [
+                "94b4a237d390f34d",
+                "938ae3326ac210ba"
+            ]
+        ]
+    },
+    {
+        "id": "9fe0848423195d4e",
+        "type": "function",
+        "z": "c456d2d5785f34db",
+        "name": "Create Payload",
+        "func": "var id = Math.floor(Math.random() * 50001); // Random ID between 0 and 50000\nvar timestamp = Math.floor(Date.now() / 1000); // UNIX timestamp\nmsg.payload = {id: id, timestamp: timestamp};\n// Save it as a flow variable because it might be necessary\nflow.set(\"random_values\", msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 100,
+        "wires": [
+            [
+                "029cf1f594822da4",
+                "073c487c8f94eaf9"
+            ]
+        ]
+    }
+]

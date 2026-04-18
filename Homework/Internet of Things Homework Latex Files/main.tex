@@ -1,0 +1,736 @@
+\documentclass{article}
+\usepackage{graphicx} 
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath} 
+\usepackage{algorithm} 
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{unicode}
+\DeclareUnicodeCharacter{0336}{\textstrike}
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+% Define colors for syntax highlighting
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Set up the listings package configuration for Python style
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Internet of Things}
+\author{%
+Rishabh Tiwari - rishabh.tiwari@mail.polimi.it - 10987397 \and
+Author Two - author.two@mail.polimi.it - 12345678 \and
+Author Three - author.three@mail.polimi.it - 87654321
+}
+\date{February 2024}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AY 2023/2024 \par}
+    \vfill
+    \includegraphics[width=150pt]{Images/PolimiLogo.png}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Internet of Things Homework\par}
+    \vspace{2cm}
+    {\Large \begin{tabular}{c}
+    Rishabh Tiwari - rishabh.tiwari@mail.polimi.it - 10987397
+    \end{tabular}\par}
+    \vfill
+    {\large Professor\par
+        Redondi Alessandro \textsc{Enrico Cesare}}
+    \vfill
+    {\large \textbf{Version 1.1}\\ \today \par}
+\end{titlepage}
+\thispagestyle{plain}
+\pagenumbering{gobble}
+\mbox{}
+\pagenumbering{roman}
+\pagenumbering{arabic}
+\section{IoT system design}
+
+You are required to design an IoT system to monitor the status of the production process in a small indoor bacterial cellulose factory. The factory is operated in a small university lab (100 sqm) and has about 20 bacterial cellulose growing basins, which must be monitored continuously to ensure the growing process is successful. The main parameters to be monitored are luminosity (2 bytes), content of sugar (2 bytes), and pH of the growing solution (1 byte). Growing bacterial cellulose is a slow process, with growing cycles of about 14 days. Monitoring cycles of 1 hour are needed to allow for changing the environmental parameters for an optimal process.
+
+\begin{enumerate}
+    \item \textbf{Propose an overall design for the system, mainly focusing on the communication technology to be used. Motivate your choice}
+
+    \paragraph{Solution:} 
+    
+\begin{itemize}
+    \item \textbf{System Architecture:} The proposed system consists of three layers: Edge Layer, Network Layer, and Cloud Layer.
+
+\begin{itemize}
+    \item \textbf{Edge Layer:} 
+    
+    20 sensor nodes, each consisting of:
+\begin{itemize}
+    \item A microcontroller (e.g., Arduino or ESP32) to collect and process data from sensors.
+    \item Three sensors:
+    \begin{itemize}
+        \item Luminosity sensor (e.g., BH1750FVI) to measure light intensity.
+        \item Sugar content sensor (e.g., YSI 2900D) to measure sugar concentration.
+        \item pH sensor (e.g., pH-450C) to measure the pH level of the growing solution.
+    \end{itemize}
+    \item Power supply (e.g., battery or USB connection).
+    \item Optional: local data processing capabilities for real-time threshold checks or anomaly detection.
+\end{itemize}
+
+    \item \textbf{Network Layer:}
+
+\begin{itemize}
+    \item Wireless communication technology: IEEE 802.15.4 (Zigbee) protocol.
+    \item 1-2 routers (depending on the lab layout) to extend the network coverage and ensure reliable communication.
+    \item 1 coordinator node (connected to the Cloud Layer) to manage the network and forward data to the cloud.
+    \item Network topology: star topology as the default communication method, with mesh capabilities as a fallback or enhancement for reliability and range.
+    \item CoAP (Constrained Application Protocol) server will be used on the coordinator node to facilitate communication between the sensor nodes and the cloud. CoAP is a lightweight, RESTful protocol suitable for constrained networks and devices.
+\end{itemize}
+
+
+    \item \textbf{Cloud Layer:}
+
+\begin{itemize}
+    \item Cloud-based IoT platform (e.g., AWS IoT, Microsoft Azure IoT, or Google Cloud IoT Core) to store, process, and analyze data.
+    \item Data analytics and visualization tools (e.g., dashboards, graphs, and alerts) to provide insights into the production process.
+    \item Data backup and redundancy strategies:
+    \begin{itemize}
+        \item Data replication across multiple geographical regions to prevent data loss.
+        \item Regular backups to ensure data integrity.
+    \end{itemize}
+    \item HTTP server will be used to provide a web-based interface for users to interact with the system, view real-time data, and receive alerts.
+\end{itemize}
+
+\end{itemize}
+
+\item \textbf{Communication Technology:}
+
+The proposed communication technology is IEEE 802.15.4 (Zigbee) protocol, which is a low-power, low-data-rate wireless communication standard suitable for IoT applications. 
+
+\item \textbf{Communication Stack:}
+
+The communication stack will consist of the following layers:
+
+\begin{itemize}
+    \item \textbf{Physical Layer:}
+    \begin{itemize}
+        \item The IEEE 802.15.4 standard defines the physical layer for Zigbee, offering a maximum data rate of 250 kbps, which is more than sufficient for the data requirements of this application.
+        \item Operating in the 2.4 GHz ISM band, it provides a global standard for low-power, low-cost, and reliable communication.
+    \end{itemize}
+    
+    \item \textbf{Data Link Layer:}
+    \begin{itemize}
+        \item The MAC (Media Access Control) sublayer handles the organization of data frames and medium access, ensuring reliable transmission with mechanisms for addressing, channel access, and error checking.
+        \item Uses CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance) to minimize collisions and ensure efficient use of the communication channel.
+    \end{itemize}
+
+    \item \textbf{Network Layer:}
+    \begin{itemize}
+        \item Zigbee's network layer supports star, tree, and mesh topologies, with this design primarily using a star topology.
+        \item The coordinator node manages the network, routes data, and ensures devices can join and leave the network seamlessly.
+        \item Mesh networking capabilities can be employed as needed for enhanced reliability and coverage.
+    \end{itemize}
+
+    \item \textbf{Transport Layer:}
+    \begin{itemize}
+        \item CoAP (Constrained Application Protocol) will be used at the transport layer to provide lightweight, reliable communication between the sensor nodes and the cloud.
+        \item CoAP operates over UDP, making it suitable for constrained environments while supporting RESTful interactions, which are easy to implement and integrate with web services.
+    \end{itemize}
+
+    \item \textbf{Application Layer:}
+    \begin{itemize}
+        \item The application layer will utilize CoAP to facilitate communication with the cloud-based IoT platform.
+        \item It will handle tasks such as sensor data collection, command and control messaging, and firmware updates.
+        \item CoAP's simplicity and efficiency make it well-suited for resource-constrained devices and networks.
+    \end{itemize}
+\end{itemize}
+
+\item \textbf{Reasons for Choosing Zigbee:}
+
+\begin{itemize}
+    \item \textbf{Low power consumption:} Zigbee devices can operate for years on a single battery, making them suitable for battery-powered sensor nodes.
+    \item \textbf{Low cost:} Zigbee modules are relatively inexpensive compared to other wireless communication technologies.
+    \item \textbf{Reliability:} Zigbee is a mesh networking technology, which means that each device can act as a router, increasing the network's reliability and coverage.
+    \item \textbf{Low data rate:} The required data rate for this application is relatively low (2 bytes for luminosity, 2 bytes for sugar content, and 1 byte for pH), making Zigbee a suitable choice.
+    \item \textbf{Short-range communication:} Zigbee is designed for short-range communication (up to 100 meters), which is sufficient for a small lab environment.
+    \item \textbf{Scalability:} Zigbee networks can easily scale by adding more nodes without significant changes to the network infrastructure.
+    \item \textbf{Interoperability:} Zigbee's adherence to the IEEE 802.15.4 standard ensures compatibility with a wide range of devices and manufacturers.
+\end{itemize}
+
+\item \textbf{Data Transmission:}
+
+\begin{itemize}
+    \item Each sensor node will transmit data to the coordinator node every 1 hour.
+    \item The coordinator node will forward the data to the Cloud Layer.
+    \item Data transmission will be done using a star topology, with mesh capabilities as a fallback or enhancement for reliability and range.
+\end{itemize}
+
+\item \textbf{Data Format:}
+
+Each data packet will contain the following information:
+\begin{itemize}
+    \item Node ID (1 byte)
+    \item Luminosity value (2 bytes)
+    \item Sugar content value (2 bytes)
+    \item pH value (1 byte)
+    \item Timestamp (4 bytes)
+\end{itemize}
+
+\item \textbf{Security:}
+
+\begin{itemize}
+    \item Data encryption will be implemented using AES-128 to ensure data confidentiality and integrity.
+    \item Authentication will be implemented using a secure authentication protocol (e.g., TLS or DTLS) to ensure that only authorized devices can join the network and transmit data.
+\end{itemize}
+
+\item \textbf{Power Management:}
+\begin{itemize} 
+    \item Sensor nodes will be powered using batteries, which will be replaced or recharged as needed.
+    \item Power management techniques (e.g., sleep modes and duty cycling) will be implemented to minimize power consumption and extend the battery life.
+\end{itemize}
+
+\item \textbf{Environmental Considerations:}
+
+\begin{itemize} 
+    \item The hardware will be protected from potential corrosive or humid conditions typical in a bacterial culture lab by using:
+    \begin{itemize} 
+        \item Casing for sensors to prevent damage from environmental factors.
+        \item Industrially rated components to ensure durability and reliability.
+    \end{itemize}
+\end{itemize}
+
+\item \textbf{User Interaction and Alerts:}
+
+\begin{itemize}
+    \item Users will be able to interact with the system through a user-friendly interface, including:
+    \begin{itemize}
+        \item Setting parameters for alerts and notifications.
+        \item Managing devices remotely.
+        \item Viewing real-time data and analytics.
+    \end{itemize}
+    \item Alerts will be triggered based on predefined thresholds and anomalies and will be sent to users via email, SMS, or mobile app notifications.
+\end{itemize}
+
+\item \textbf{Cost Analysis:}
+
+\begin{itemize}
+    \item Initial setup costs: hardware and software costs for sensor nodes, routers, coordinator node, and cloud infrastructure.
+    \item Ongoing maintenance costs: battery replacements, software updates, and cloud infrastructure costs.
+    \item Potential savings: optimized growing conditions can lead to increased yields, reduced energy consumption, and improved product quality.
+\end{itemize}
+
+\item \textbf{System Maintenance and Updates:}
+
+\begin{itemize}
+    \item Firmware and software updates will be handled remotely, using secure protocols to prevent security vulnerabilities.
+    \item Regular system checks and maintenance will be performed to ensure system performance and reliability.
+\end{itemize}
+
+\item \textbf{Regulatory and Compliance Issues:}
+
+The system will comply with relevant regulations and standards, including:
+\begin{itemize}
+    \item Wireless communication regulations (e.g., FCC, CE, or TELEC).
+    \item Data privacy regulations (e.g., GDPR, HIPAA).
+    \item Industry-specific standards (e.g., ISO, IEC).
+\end{itemize}
+
+\end{itemize}
+
+\newpage
+
+\item \textbf{Write the pseudo code of the firmware that should be run by the monitoring device installed on each basin}
+
+\paragraph{Solution :} 
+
+\begin{lstlisting}[language=Python]
+import time
+import zigbee
+import coap
+
+# Initialize sensors and variables
+luminosity_sensor = BH1750FVI()
+sugar_content_sensor = YSI2900D()
+pH_sensor = pH450C()
+node_id = unique_id()
+battery_level = 100
+
+# Initialize Zigbee communication module
+zigbee_module = zigbee.ZigbeeModule()
+zigbee_module.init(node_id)
+
+# Ensure connection to the Zigbee network
+def ensure_network_connection():
+    if not zigbee_module.ensure_connection():
+        handle_network_failure()
+
+ensure_network_connection()
+
+# Initialize CoAP client for communications over Zigbee
+coap_client = coap.CoAPClient()
+coap_client.init(zigbee_module)
+
+# Security initialization
+encryption_key = load_encryption_key()  # Load AES-128 encryption key
+
+# Data collection thresholds
+thresholds = {
+    'luminosity': 500,
+    'sugar_content': 20,
+    'pH': 7.0
+}
+
+def read_sensors():
+    try:
+        luminosity = luminosity_sensor.read()
+        sugar_content = sugar_content_sensor.read()
+        pH_level = pH_sensor.read()
+        return luminosity, sugar_content, pH_level
+    except SensorError as e:
+        log_error("Sensor read error: " + str(e))
+        return None, None, None
+
+def send_alert(message, node_id):
+    alert_data = {
+        'node_id': node_id,
+        'alert': message
+    }
+    alert_data_encrypted = encrypt_data(alert_data, encryption_key)
+    coap_client.post('alerts', alert_data_encrypted)
+
+def log_error(message):
+    # Log the error to local storage or a secure cloud-based logging service
+    print("ERROR: " + message)  # Replace with actual logging implementation
+
+def calculate_power_consumption():
+    return 0.05  # Calculate and return power consumption
+
+def current_timestamp():
+    return time.time()
+
+def encrypt_data(data, key):
+    # Encrypt data using AES-128 with the provided key
+    return aes_encrypt(data, key)
+
+def handle_network_failure():
+    # Attempt to reconnect to the network
+    while not zigbee_module.ensure_connection():
+        log_error("Network connection failed; attempting to reconnect...")
+        time.sleep(10)  # Wait for 10 seconds before retrying
+    log_error("Network reconnected successfully")
+
+while True:
+    luminosity, sugar_content, pH_level = read_sensors()
+    if luminosity is None or sugar_content is None or pH_level is None:
+        continue
+
+    # Check and alert if values are below thresholds
+    if luminosity < thresholds['luminosity']:
+        send_alert("Low luminosity", node_id)
+    if sugar_content < thresholds['sugar_content']:
+        send_alert("Low sugar content", node_id)
+    if pH_level < thresholds['pH']:
+        send_alert("Low pH", node_id)
+
+    # Prepare data packet for transmission
+    data_packet = {
+        'node_id': node_id,
+        'luminosity': luminosity,
+        'sugar_content': sugar_content,
+        'pH': pH_level,
+        'timestamp': current_timestamp()
+    }
+
+    # Encrypt data packet before transmission
+    data_packet_encrypted = encrypt_data(data_packet, encryption_key)
+
+    # Send data to coordinator node using CoAP
+    coap_client.post('data', data_packet_encrypted)
+
+    # Manage power usage based on battery status
+    battery_level -= calculate_power_consumption()
+    if battery_level < 20:
+        send_alert("Low battery", node_id)
+
+    # Sleep to save energy
+    time.sleep(3600)  # Sleep for 1 hour
+\end{lstlisting}
+
+% \vspace{13pt}
+
+% \newpage
+
+\item \textbf{As an add-on, you are required to install a VGA camera (640x480 pixels, 8 bits per pixel) to monitor the status of the growing process. Is the solution proposed at the previous points still valid? If not, propose an alternative solution.}
+
+\paragraph{Solution:}
+
+\begin{itemize}
+    \item \textbf{Why the Previous Solution is Not Valid:}
+    \begin{itemize}
+        \item \textbf{Bandwidth Limitations of Zigbee:}
+        \begin{itemize}
+            \item Zigbee has a maximum data rate of 250 kbps.
+            \item A VGA camera at 640x480 pixels with 8 bits per pixel produces a significant amount of data per frame, making it impractical to transmit using Zigbee due to its bandwidth constraints.
+        \end{itemize}
+        
+        \item \textbf{Power Consumption:}
+        \begin{itemize}
+            \item Zigbee is designed for low power consumption, typically around 1 mW in idle mode and up to 100 mW in transmission mode.
+            \item Continuous high data rate transmission (like image data) would significantly increase power consumption, reducing the battery life of sensor nodes.
+        \end{itemize}
+        
+        \item \textbf{System Complexity and Efficiency:}
+        \begin{itemize}
+            \item Combining sensor data and image data on Zigbee would lead to network congestion and increased packet loss.
+            \item Prioritizing critical sensor data over large image data would be challenging, reducing the efficiency of the monitoring system.
+        \end{itemize}
+    \end{itemize}
+
+    \item \textbf{Alternative Solution and Its Validity:}
+    \begin{itemize}
+        \item \textbf{High Bandwidth Capability:}
+        \begin{itemize}
+            \item Wi-Fi (IEEE 802.11n) supports high data rates, far exceeding the requirements for transmitting VGA camera data.
+            \item Transmitting large image files is feasible with Wi-Fi, enabling real-time monitoring.
+        \end{itemize}
+        
+        \item \textbf{Separation of Data Channels:}
+        \begin{itemize}
+            \item Using Wi-Fi for image data and Zigbee for sensor data allows efficient management of data flows.
+            \item Sensor data continues to be transmitted with low latency and low power via Zigbee, while high-bandwidth image data is handled by Wi-Fi.
+        \end{itemize}
+        
+        \item \textbf{MQTT for Efficient Communication:}
+        \begin{itemize}
+            \item MQTT is a lightweight messaging protocol with low overhead, making it suitable for IoT applications.
+            \item MQTT can handle thousands of messages per second, supporting the scalability of the system as more devices or data are added.
+        \end{itemize}
+        
+        \item \textbf{Improved Power Management:}
+        \begin{itemize}
+            \item While Wi-Fi consumes more power (typically around 1 W during transmission), using it selectively for image data balances overall power consumption.
+            \item Sensor nodes using Zigbee can remain low-power, extending their battery life.
+        \end{itemize}
+        
+        \item \textbf{Scalability and Flexibility:}
+        \begin{itemize}
+            \item The dual-communication approach (Wi-Fi for images, Zigbee for sensors) supports scalability as system needs grow.
+            \item Wi-Fi infrastructure can accommodate additional high-bandwidth peripherals without affecting the performance of the sensor network.
+        \end{itemize}
+        
+        \item \textbf{Enhanced Security:}
+        \begin{itemize}
+            \item Separate networks allow for tailored security measures. Wi-Fi can use WPA3 encryption for image data, ensuring robust security.
+            \item Zigbee can continue to use AES-128 encryption for sensor data, maintaining a balance between security and computational overhead.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\begin{lstlisting}[language=Python]
+import time
+import zigbee
+import wifi
+import mqtt
+import camera
+
+# Initialize sensors and variables
+luminosity_sensor = BH1750FVI()
+sugar_content_sensor = YSI2900D()
+pH_sensor = pH450C()
+node_id = unique_id()
+battery_level = 100
+
+# Initialize Zigbee communication module for sensor data
+zigbee_module = zigbee.ZigbeeModule()
+zigbee_module.init(node_id)
+
+# Ensure Zigbee connection
+def ensure_zigbee_connection():
+    if not zigbee_module.ensure_connection():
+        handle_network_failure()
+
+ensure_zigbee_connection()
+
+# Initialize WiFi for camera data transmission
+wifi_module = wifi.WiFiModule()
+wifi_module.connect('SSID', 'password')
+
+# Initialize MQTT client for image data transmission
+mqtt_client = mqtt.MQTTClient()
+mqtt_client.init(wifi_module)
+
+# Initialize VGA camera
+camera_module = camera.VGACamera()
+camera_module.init()
+
+# Security initialization
+encryption_key = load_encryption_key()  # Load AES-128 encryption key
+
+# Data collection thresholds
+thresholds = {
+    'luminosity': 500,
+    'sugar_content': 20,
+    'pH': 7.0
+}
+
+def read_sensors():
+    try:
+        luminosity = luminosity_sensor.read()
+        sugar_content = sugar_content_sensor.read()
+        pH_level = pH_sensor.read()
+        return luminosity, sugar_content, pH_level
+    except SensorError as e:
+        log_error("Sensor read error: " + str(e))
+        return None, None, None
+
+def capture_image():
+    try:
+        image_data = camera_module.capture_image()
+        return image_data
+    except CameraError as e:
+        log_error("Camera error: " + str(e))
+        return None
+
+def send_alert(message, node_id):
+    alert_data = {
+        'node_id': node_id,
+        'alert': message
+    }
+    alert_data_encrypted = encrypt_data(alert_data, encryption_key)
+    mqtt_client.publish('alerts', alert_data_encrypted)
+
+def log_error(message):
+    # Log the error to local storage or a secure cloud-based logging service
+    print("ERROR: " + message)  # Replace with actual logging implementation
+
+def calculate_power_consumption():
+    return 0.05  # Calculate and return power consumption
+
+def current_timestamp():
+    return time.time()
+
+def encrypt_data(data, key):
+    # Encrypt data using AES-128 with the provided key
+    return aes_encrypt(data, key)
+
+def handle_network_failure():
+    # Attempt to reconnect to the network
+    while not zigbee_module.ensure_connection():
+        log_error("Network connection failed; attempting to reconnect...")
+        time.sleep(10)  # Wait for 10 seconds before retrying
+    log_error("Network reconnected successfully")
+
+while True:
+    luminosity, sugar_content, pH_level = read_sensors()
+    if luminosity is None or sugar_content is None or pH_level is None:
+        continue
+
+    # Check and alert if values are below thresholds
+    if luminosity < thresholds['luminosity']:
+        send_alert("Low luminosity", node_id)
+    if sugar_content < thresholds['sugar_content']:
+        send_alert("Low sugar content", node_id)
+    if pH_level < thresholds['pH']:
+        send_alert("Low pH", node_id)
+
+    # Capture image from VGA camera
+    image_data = capture_image()
+    if image_data is not None:
+        # Encrypt image data
+        image_data_encrypted = encrypt_data(image_data, encryption_key)
+        # Send image data to cloud-based MQTT broker
+        mqtt_client.publish('images', image_data_encrypted)
+
+    # Prepare data packet for transmission
+    data_packet = {
+        'node_id': node_id,
+        'luminosity': luminosity,
+        'sugar_content': sugar_content,
+        'pH': pH_level,
+        'timestamp': current_timestamp()
+    }
+
+    # Encrypt data packet before transmission
+    data_packet_encrypted = encrypt_data(data_packet, encryption_key)
+
+    # Send data to coordinator node using Zigbee
+    zigbee_module.send(data_packet_encrypted)
+
+    # Manage power usage based on battery status
+    battery_level -= calculate_power_consumption()
+    if battery_level < 20:
+        send_alert("Low battery", node_id)
+
+    # Sleep to save energy
+    time.sleep(3600)  # Sleep for 1 hour
+\end{lstlisting}
+
+\end{enumerate}
+
+\newpage
+
+\section{Short-range connectivity}
+
+A personal area network (PAN)  works in IEEE 802.15.4 beacon-enabled mode with CFP only, and with a nominal data rate of 250 [kb/s]. Motes in the network have uplink only traffic towards the PAN with the following distribution: P(r=0 [bit/s])=0.1,  P(r=10 [kb/s])=0.3, P(r=20 [kb/s])=0.6. Motes use packets of b = 128 bytes for communication, and each packet fits exactly one slot in the CFP.
+
+\begin{enumerate}
+    \item \textbf{What is the beacon interval (BI) in ms?}
+    \paragraph{Solution :} 102.4
+    \item \textbf{What is the slot time (Ts) in ms?}
+    \paragraph{Solution :} 4.096
+    \item \textbf{Assuming the maximum duty cycle allowed is 30\%, what is the active part of the superframe (Tactive) in ms?}
+    \paragraph{Solution :} 30.72
+    \item \textbf{How many active slots are there in the C̶F̶P̶ Beacon Interval ?}
+    \paragraph{Solution :} 7
+    \item \textbf{How many inactive slots are there in the C̶F̶P̶ Beacon Interval ?}
+    \paragraph{Solution :} 18
+    \item \textbf{How many motes can join the network?}
+    \paragraph{Solution :} 3
+    
+\end{enumerate}
+
+\newpage
+
+\section{Long-range connectivity}
+
+You have setup a weather monitoring station on your balcony and would like to transmit the acquired data over a web service (e.g., ThingSpeak). You have no Wi-Fi connectivity at home, therefore you plan to use a long-range IoT communication technology. After careful consideration, you need to choose between LoRa and NB-IoT
+
+\begin{enumerate}
+    \item \textbf{What are the main factors you would look at to make your final choice?}
+
+\paragraph{Solution :}
+
+\begin{enumerate}
+    \item \textbf{Coverage and Range:}
+    \begin{itemize}
+        \item LoRa: Operates on unlicensed frequency bands, providing a range of up to 15 km (9.3 miles) in urban areas and up to 40 km (24.9 miles) in rural areas.
+        \item NB-IoT: Operates on licensed frequency bands, offering a range of up to 10 km (6.2 miles) in urban areas and up to 20 km (12.4 miles) in rural areas.
+        \item Consideration: If covering a larger area is necessary, LoRa might be a better choice.
+    \end{itemize}
+
+    \item \textbf{Power Consumption:}
+    \begin{itemize}
+        \item LoRa: Known for its low power consumption, with devices typically operating for 5-10 years on a single battery.
+        \item NB-IoT: Also designed for low power consumption, but slightly higher than LoRa, with devices typically operating for 2-5 years on a single battery.
+        \item Consideration: If power efficiency is crucial, LoRa might be a better fit.
+    \end{itemize}
+
+    \item \textbf{Cost:}
+    \begin{itemize}
+        \item LoRa: Typically less expensive than NB-IoT, with lower module costs and no need for a cellular subscription.
+        \item NB-IoT: Requires a cellular subscription, which can increase costs, but offers more reliable connectivity and better QoS (Quality of Service).
+        \item Consideration: If budget is a constraint, LoRa might be more suitable.
+    \end{itemize}
+
+    \item \textbf{Data Rate and Capacity:}
+    \begin{itemize}
+        \item LoRa: Offers a lower data rate (up to 50 kbps) and is designed for low-bandwidth applications.
+        \item NB-IoT: Provides a higher data rate (up to 250 kbps) and is suitable for applications requiring more frequent data transmission.
+        \item Consideration: If larger amounts of data need to be transmitted or higher data rates are required, NB-IoT might be a better choice.
+    \end{itemize}
+
+    \item \textbf{Network Availability and Reliability:}
+    \begin{itemize}
+        \item LoRa: Requires a private network infrastructure, which can be set up and managed by the user.
+        \item NB-IoT: Leverages existing cellular networks, offering better reliability and wider coverage.
+        \item Consideration: If a more reliable and widely available network is needed, NB-IoT might be a better option.
+    \end{itemize}
+
+    \item \textbf{Security:}
+    \begin{itemize}
+        \item LoRa: Offers end-to-end encryption and secure authentication mechanisms.
+        \item NB-IoT: Inherits the security features of cellular networks, including encryption and authentication.
+        \item Consideration: Both options provide adequate security, but NB-IoT's cellular network security might be more robust.
+    \end{itemize}
+
+    \item \textbf{Device Complexity and Integration:}
+    \begin{itemize}
+        \item LoRa: Requires more complex device integration and setup, as it operates on a private network.
+        \item NB-IoT: Offers simpler device integration, as it leverages existing cellular infrastructure.
+        \item Consideration: If a more straightforward device integration process is preferred, NB-IoT might be a better choice.
+    \end{itemize}
+
+    \item \textbf{Penetration and Obstacle Handling:}
+    \begin{itemize}
+        \item LoRa: Has excellent penetration in urban settings due to its use of sub-gigahertz frequencies, which can help in reaching remote sensors in challenging locations.
+        \item NB-IoT: Benefits from the established infrastructure of cellular networks, which can lead to more consistent coverage within its range, even in urban environments.
+        \item Consideration: If ensuring reliable connectivity in urban or challenging environments is needed, LoRa might be a better fit.
+    \end{itemize}
+\end{enumerate}
+
+Based on the comparison between LoRa and NB-IoT for long-range IoT communication, LoRa is chosen for the following reasons:
+
+\begin{enumerate}
+    \item \textbf{Coverage and Range:}
+    \begin{itemize}
+        \item LoRa's excellent coverage and range, including its ability to penetrate urban settings and reach remote sensors, make it well-suited for the weather monitoring station.
+    \end{itemize}
+
+    \item \textbf{Power Consumption:}
+    \begin{itemize}
+        \item LoRa's low power consumption is ideal for the station's need for infrequent and low-volume data transmission, which will help extend the battery life of the devices.
+    \end{itemize}
+
+    \item \textbf{Cost Effectiveness:}
+    \begin{itemize}
+        \item LoRa's lower module costs and the absence of a need for a cellular subscription make it a more cost-effective option for this application.
+    \end{itemize}
+
+    \item \textbf{Trade-Offs:}
+    \begin{itemize}
+        \item While NB-IoT offers better reliability and Quality of Service (QoS), the benefits LoRa provides in terms of coverage, power consumption, and cost make it the preferable choice for this specific application.
+    \end{itemize}
+\end{enumerate}
+
+    
+    
+    \item \textbf{You opt to use LoRa, using an open-source gateway close by (e.g., provided by the Things Network). However, your transmission are not successfull. What are the possible causes, and what kind of solutions could be adopted?}
+
+\paragraph{Solution :}
+
+\paragraph{Possible Causes}
+\begin{enumerate}
+    \item \textbf{Insufficient Gateway Coverage}: The open-source gateway might not be close enough or have sufficient coverage to receive the LoRa transmissions effectively.
+    \item \textbf{Interference from Other Devices and Environment}: Other devices and environmental factors such as trees and weather might be causing interference with the LoRa signals, reducing their strength or corrupting the data.
+    \item \textbf{Incorrect Configuration}: The LoRa device or the gateway might not be configured correctly, leading to transmission failures.
+    \item \textbf{Obstacles or Physical Barriers}: Physical obstacles, such as buildings, hills, or dense foliage, might be blocking the LoRa signals, reducing their range or strength.
+    \item \textbf{Device or Hardware Issues}: The LoRa device or the gateway might have hardware issues, such as faulty antennas or malfunctioning radios.
+    \item \textbf{Network Congestion}: High traffic on the same LoRa channels can cause delays or blockages in message delivery.
+\end{enumerate}
+
+\paragraph{Solutions}
+\begin{enumerate}
+    \item \textbf{Move the Gateway Closer}: Relocate the open-source gateway to a location that provides better coverage and is closer to the LoRa device.
+    \item \textbf{Use a Repeater or Range Extender}: Implement a LoRa repeater or range extender to amplify and retransmit the LoRa signals, increasing their range and strength.
+    \item \textbf{Adjust Device Configuration}: Verify and adjust the configuration of the LoRa device and the gateway to ensure they are set up correctly and compatible with each other.
+    \item \textbf{Optimize Antenna Placement}: Optimize the placement and orientation of the LoRa device's antenna to minimize the impact of obstacles and physical barriers.
+    \item \textbf{Replace or Repair Faulty Hardware}: Replace or repair any faulty hardware, such as antennas or radios, to ensure the LoRa device and the gateway are functioning correctly.
+    \item \textbf{Use a Different Frequency or Spreading Factor}: Experiment with different LoRa frequencies or spreading factors to find a configuration that minimizes interference and improves transmission success, while ensuring compliance with local regulations.
+    \item \textbf{Implement Error Correction and Retries}: Implement error correction mechanisms, such as forward error correction (FEC), and retries to improve the reliability of the LoRa transmissions.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

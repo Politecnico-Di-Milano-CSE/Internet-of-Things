@@ -1,0 +1,206 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{textpos}
+\usepackage{scrhack}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{tasks}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{listing}
+\usepackage{graphicx}
+\usepackage{geometry} 
+\usepackage{amsmath}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\title{Group Monitoring in Mobile IoT}
+\author{%
+Rishabh Tiwari - rishabh.tiwari@mail.polimi.it - 10987397 \and
+Author Two - author.two@mail.polimi.it - 12345678 \and
+Author Three - author.three@mail.polimi.it - 87654321
+}
+\date{February 2024}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AY 2023/2024 \par}
+    \vfill
+    \includegraphics[width=150pt]{Images/PolimiLogo.png}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Internet of Things Challenge - 1\par}
+    \vspace{2cm}
+    {\Large \begin{tabular}{c}
+    Rishabh Tiwari - rishabh.tiwari@mail.polimi.it - 10987397\\
+    Marcos V. Firmino P. - marcosvinicius.firmino@mail.polimi.it
+ - 10914211\\
+    Alexander Stephan - alexander.stephan@mail.polimi.it - 10932707
+    \end{tabular}\par}
+    \vfill
+    {\large Professor\par
+        Redondi Alessandro \textsc{Enrico Cesare}}
+    \vfill
+    {\large \textbf{Version 1.1}\\ \today \par}
+\end{titlepage}
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+\thispagestyle{plain}
+\pagenumbering{gobble}
+\mbox{}
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+\section{Introduction}
+
+In our project, we worked on an innovative Wokwi project to tackle a real-world challenge - monitoring parking spaces efficiently and sustainably. Our goal was to develop a simple yet effective parking occupancy sensor using the HC-SR04 ultrasonic distance sensor and ESP-NOW for communication. This sensor would determine if a parking spot is occupied and then communicate this information to a central hub. A key feature of our design was its energy efficiency; we programmed the sensor to enter a deep sleep mode, waking up periodically to check the parking space's status before going back to sleep. We also calculated the power and energy consumption for a full cycle of activity to estimate how long the sensor could operate on a single battery. \\Additionally, we explored potential improvements to reduce energy consumption further without compromising the system's core functionality - ensuring the
+sensor's ability to notify the central hub about the parking spot's occupancy status. Throughout this project, we've navigated through coding challenges, energy consumption estimations, and thoughtful analysis on how to improve the system's efficiency, all while keeping the primary task in focus. This report outlines the logic behind our code, our findings on power and energy use, and our proposals for making the sensor node even more energy-efficient. 
+
+\section{Energy Calculations}
+
+We used the given CSV files to make estimations of the energy consumed in each case. Then, we take the average out of the samples, importing the CSVs to Excel. The idle power is derived from the graph shown in the tutorial regarding energy consumption.
+\subsection{Per Mode Power Consumption}
+\begin{itemize}
+    \item Deep Sleep: $59.65\,mW$
+    \item Idle: $331.57\,mW$
+    \item Transmission State: $797.71\,mW$
+    \item Sensor Readings: $466.75\,mW$
+\end{itemize}
+
+\subsection{Energy Consumption for a Transmission Cycle}
+
+\subsubsection{Assumptions}
+We can assume that the board goes directly to the $loop$, since the setup part is done only once, it is really fast and statistically insignificant for a system that should run for hours along.
+
+
+\vspace{4mm}
+\noindent Our leader has the following person code $$10987397$$, thus the calculated duty cycle is:
+
+\begin{equation} \label{duty_cycle}
+     (97\%50)\,s + 5\,s = 52\,s
+\end{equation}
+\newpage
+Our assumptions:
+\begin{itemize}
+    \item The \textit{boot} energy spike was not considered.
+    \item No idle time was considered since we measured it to be insignificant during the loop. We only idle during the sensor measurement, but this is also factored-in the provided CSV.
+    \item The time in deep sleep is equal to the duty cycle period \ref{duty_cycle}, so 52\,s.
+\end{itemize}
+
+\subsubsection{Time Measurements}
+
+To retrieve the amount of seconds the system spent on each state, we deployed the \texttt{micros()} function, executing \textit{deltas} in order to get the desired time frame.
+Given a distance of $45\,cm$---and this is important because the measuring time varies according to the distance - our results are:
+\begin{itemize}
+    \item Time reading the ultrasound sensor: 3043\,$\mu s$
+    \item Time transmitting via Wi-Fi: 181\,$\mu s$
+\end{itemize}
+
+\subsubsection{Calculations}
+
+With all the information above, we can calculate the energy needed per cycle:
+
+\begin{equation}
+\text{Total Energy} = \text{Reading Time} + \text{Transmission Time} + \text{Sleeping Time} 
+\end{equation}
+
+\noindent Substituting the corresponding values
+\begin{equation}
+    \begin{aligned}
+    \text{Energy}_{\text{1Cycle}} = 3043\,\mu s \times 466.75\,mW \\+  181\,\mu s \times 797.71\,mW + 52\,s \times 59.65\,mW
+    \end{aligned}
+\end{equation}
+% https://www.wolframalpha.com/input?i=3043+microseconds+%C3%97+466.75+mW+%2B181+microseconds+%C3%97+797.71+mW+%2B+52+seconds+%C3%97+59.65+mW+in+J
+
+\noindent Solving
+
+\begin{equation}\label{energy1cycle}
+    \text{Energy}_{\text{1Cycle}} = 3.103\,J
+\end{equation}
+
+\subsection{Time Until Battery Change}
+The battery energy was calculated by the given formula, in our case:
+\begin{equation}
+    Y = 7397 + 5   
+\end{equation}
+
+\begin{equation}
+    \text{Battery Capacity} = Y\,J \,\widehat{=}\, 7.402\,kJ
+\end{equation}
+
+\noindent So, given the amount of energy spent in one cycle (see \autoref{energy1cycle}), the number of cycles before a battery change will be:
+
+\begin{equation}
+    N_{\text{cycles}} = \frac{\text{Battery Capacity}}{\text{Energy}_{\text{1Cycle}}}
+    = \frac{7.402\,kJ}{3.103\,J} \approx 2386
+\end{equation}
+We assume that $N_{\text{cycles}}$ is an integer.
+Note that we have to round up here, as in cycle 2385 there is still some energy left.
+
+\noindent Given our duty cycle period, the total time will be:
+
+\begin{equation} \label{result_time}
+     N_{\text{cycles}} \times \text{Duty Cycle Period} = 2386 \times 52\,s \\= 124080\,s = 34.467\,h \approx 1.436\,d 
+\end{equation}
+% https://www.wolframalpha.com/input?i=%287.402+kJ%2F3.102+J%29+*+52+s
+So, according to our calculations, the system can stand alone for almost 1 day and a half ( \autoref{result_time}).
+
+\section{Description of Implementation}
+The code logic for the sensor node goes as follows:
+\begin{enumerate}
+    \item \textbf{Functions}: We wrote a handful of functions in order to organize the code and make it more readable.
+    \begin{enumerate}
+        \item \path{on_data_sent()}: performs a confirmation print whenever data is sent
+        \item \texttt{setup\_ultrasonic\_sensor()}: setup sensor's pins
+        \item \texttt{setup\_wifi()}: setup Wi-Fi with $$2\,dB$$ bandwidth
+        \item \texttt{register\_peer()}: register the broadcast address
+        \item \texttt{register\_hooks()}: registers callback for when data is sent
+        \item \texttt{print\_results()}: print the timing information and the communication status
+    \end{enumerate}
+    \item \textbf{Setup}:
+    \begin{enumerate}
+        \item Set the sleep time to $52\,s$ with \path{esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);}. Note that we convert seconds to microseconds here according to the libraries' specifications.
+        \item Define and set the \texttt{TRIG} pin as output to trigger the measurement on the ultrasonic sensor.
+        \item Define and set the \texttt{ECHO} pin as input to perform the actual measurements.
+        \item Set up the Wi-Fi by setting the Wi-Fi mode to station mode and adding a send hook to validate the successful sending of the status.
+        \item Add a peer that is initialized with the protocol-specific broadcast address, so the library knows where to send the packets.
+    \end{enumerate}
+    \item \textbf{Loop}:
+
+    \begin{enumerate}
+        \item Read the distance by setting the \texttt{TRIG} pin high for 10 ms and reading the value via the ECHO pin. Divide the retrieved value by $58$, following the Wokwi documentation of this component.
+        \item Set the status according to the measured distance (depending on whether it is $\leq 50\,cm$).
+        \item Send status to the broadcast address via \verb|esp_now_send()|.
+        \item Measures all the necessary timing.
+        \item Call deep sleep via \path{esp_deep_sleep_start()}. After the timer has ended, the loop repeat itself.
+    \end{enumerate}
+\end{enumerate}
+
+\section{Possible Improvements for Energy Consumption}
+The requirement of the system is to perform correct measurements and deliver timely results while using as little energy as possible. This leads us to the following considerations:
+\begin{enumerate}
+    \item The most obvious change is to disable Wi-Fi when not sending data. As we are only sending data to the network, but not receive data, listening for incoming packets and powering the Wi-Fi card is a waste of energy. So, after we read the data, we shortly enable Wi-Fi and then directly disable it again.
+    This can be done with the default Wi-Fi library and is well described in online literature, e.\,g. \url{https://esp8266hints.wordpress.com/2017/06/29/save-power-by-reliably-switching-the-esp-wifi-on-and-off/} (applies also to ESP32).
+    \item With the current implementation, a value if sent out directly after its measurement. This leads to as many transmissions as there were measurements. However, for some applications, it might be acceptable that there is a delay in distance readings. In this case, we can batch measurements at the sensor node, e.\,g., send out 10 values at once. This could be achieved by appending the values to a comma-separated string. In practice, you probably could only batch 2–3 values because otherwise, the parking spot would become too inaccurate. You could also make a trade-off by lowering the duty cycle and increasing the batch size. This can lead to a more detailed occupancy detection, while still lowering the overall energy consumption.
+    \item E.\,g., overnight the parking spot might not be frequently used. In this case, the sensor will always read the same value. Same for cars that park for a long duration. Therefore, to save energy, we could only send out the values on a change, always comparing to the previous one. This can be used in combination with the first point.
+    \item Although we are in deep sleep after sending out the values, we still use a normal delay when reading the sensor. As already mentioned in the implementation section, there must be $10\,ms$ delay after triggering the sensor. A light sleep or even a deep sleep is possible here, further reducing the energy consumption of our system. 
+    \item Another improvement would be to synchronize the sleep cycles. If the sensor node sends out its data, and the sink node is not available, the data needs to be re-transmitted. This consumes additional energy. As the exercise statement mentions that the energy consumption of the sink node is not restricted, we are unsure, if this improvement applies in our particular case since a sleep might not be needed at all. (Although the sink node has no energy constraints, it still might be desirable to reduce its energy consumption.)
+\end{enumerate}
+
+\end{document}
